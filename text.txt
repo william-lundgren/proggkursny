@@ -1,0 +1,22 @@
+\begin{itemize}
+    \item \textit{Prylmästare – Head Of Facilities and Logistics} till \textit{Prylmästare – Keyhead}
+    \item \textit{Överfös - Head of Introduction Committee} till \textit{Överfös - Scoophead}
+    \item \textit{Cofös - Introduction Committee Commissioner} till \textit{Cofös - Cowhead}
+    \item \textit{Sexmästare - Head of Festivities} till \textit{Sexmästare - Sexhead}
+    \item \textit{Spindelförman - Head of App- and Web Development} till \textit{Spindelförman - Webhead}
+    \item \textit{Näringslivsansvarig – Head of Corporate Relations} till \textit{Näringslivsansvarig - \$\$\$-head}
+    \item \textit{Cafemästare – Head of the Café} till \textit{Cafémästare - Cuphead}
+    \item \textit{Vice cafémästare – Deputy head of the Café} till \textit{Vice cafémästare - Mughead}
+    \item \textit{Sekreterare – Secretary} till \textit{Sekreterare - Penhead}
+    \item \textit{Projektledare FARAD – Project Manager of FARAD} till \textit{Projektledare FARAD - 404head}
+    \item \textit{Sanningsminister - Minister of Truth} till \textit{Sanningsminister - Infohead}
+    \item \textit{Ordförande - President till \textit{Ordförande} - Headhead}
+    \item \textit{Styrelsepreses - Chair of the Board} till \textit{Styrelsepreses - Bonkhead}
+    \item \textit{Utbildningsminister – Minister for Education} till \textit{Utbildningsminister - Brainhead}
+    \item \textit{Sektionshärold – Chief Herald} till \textit{Sektionshärold - Blinghead}
+    \item \textit{Revisor - Auditors} till \textit{Revisor - Lawhead}
+    \item \textit{Kulturminister - Minister of Culture} - till \textit{Kulturminister - Funhead}
+    \item \textit{Idrottsförman - Sports foreman} till \textit{Idrottsförman - Runhead}
+    \item \textit{Reisemeister - } till \textit{Reisemeister - Stonehead}
+    \item \textit{Bilförman - Car Supervisor} till \textit{Bilförman - Carhead}
+\end{itemize}
