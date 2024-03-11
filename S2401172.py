@@ -17,15 +17,21 @@ df_inflation = pd.read_csv("inflation.csv")
 
 # Make it a function to make code more readable
 def get_country_code(country_name):
-    return df_regions[df_regions['Land'] == country_name]['Landskod'].values[0]
+    # make the country names lowercase since spaces mess up the capitalize check
+    # get all the column values where the land column matches the name
+    return df_regions[df_regions['Land'].str.lower() == country_name.lower()]['Landskod'].values[0]
 
 def get_country_name(country_code):
-    return df_regions.loc[df_regions["Landskod"] == country_code, "Land"].values[0]
+    # make the country names lowercase since spaces mess up the capitalize check
+    # get all the column values where the landskod column matches the code
+    return df_regions.loc[df_regions["Landskod"].str.lower() == country_code.lower(), "Land"].values[0]
 
 def get_country_names(country_codes):
     names = []
     for code in country_codes:
-        names.append(df_regions.loc[df_regions["Landskod"] == code, "Land"].values[0])
+        # make the country names lowercase since spaces mess up the capitalize check
+        # get all columns that have matching values with country code and add to names
+        names.append(df_regions.loc[df_regions["Landskod"].str.lower() == code.lower(), "Land"].values[0])
     return names
 
 def get_inflation_by_year(year):
@@ -33,7 +39,9 @@ def get_inflation_by_year(year):
 
 
 def get_inflation_by_country_code(code):
-    return df_cpi[df_cpi['Landskod'] == code].iloc[0]
+    # more clean way to get the country code consistently
+    # matches the landkod column in dfcpi which values that are equal to the code
+    return df_cpi[df_cpi['Landskod'].str.lower() == code.lower()].iloc[0]
 
 
 def sanitize_input(x, y):
@@ -230,7 +238,7 @@ bar_values = values_1 + values_2
 plt.bar(bar_names, bar_values)
 plt.title(f"De lägsta och högsta inflationerna uppmätta år {year}")
 plt.grid(True)
-plt.xticks(rotation=15)
+plt.xticks(rotation=20)
 plt.show()
 
 # The data is still using country codes since the regions set for some reason is not the complete set of country code
