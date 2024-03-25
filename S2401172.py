@@ -55,6 +55,7 @@ def sanitize_input(x, y):
     # add to a different array so we dont remove while iterating, gives more readable code
     for j, entry in enumerate(y.values.tolist()[1:]):
         if math.isnan(entry) or math.isinf(entry):
+            print(entry, "is nan")
             to_remove.append(j)
 
     for index in to_remove:
@@ -86,6 +87,8 @@ for country_name in countries:
     # Convert input country names to country codes so we can find in the dataframe
     country_codes.append(get_country_code(country_name))
 
+# Create figure for the 1-3 countries with proper size
+plt.figure(figsize=(10, 6))
 # Enumerate so we can get the index of the list and get correspoding value in the country name list for the legend
 for i, country_code in enumerate(country_codes):
     years = list(range(1960, 2023))
@@ -115,19 +118,19 @@ for i, country_code in enumerate(country_codes):
     plt.grid(True)
     plt.xticks(years, rotation='vertical')
     plt.legend()
-
+plt.show()
 
 # ---- PART B: ----
 
 
 def FF(curr_inflation, last_inflation):
     # input the inflation as a list, years as a list and year is the year to get a value for
-    print(curr_inflation, last_inflation)
     return (curr_inflation - last_inflation) / last_inflation
 
-
-plt.figure()
+# Figure with proper size
+plt.figure(figsize=(10, 6))
 # we assume we get proper inputs, since input handling is tedious and not the point of this exercise
+
 country_name = input("Enter name of country to analyse change in inflations for: ")
 
 country_code = get_country_code(country_name.capitalize())
@@ -140,7 +143,6 @@ years, inflation = sanitize_input(years, inflation)
 inflation = inflation.values.tolist()[1:]
 
 change_inflation = []
-print(inflation)
 for index, value in enumerate(inflation[1:]):
     change_inflation.append(FF(value, inflation[index]))
 
@@ -191,6 +193,9 @@ year = input("Ange årtal som ska analyseras: ")
 
 inflation = get_inflation_by_year(year)
 
+# figure with proper size
+plt.figure(figsize=(10, 6))
+
 # Sanitize input and remove the nan from the dataframe
 to_remove = []
 
@@ -198,7 +203,7 @@ to_remove = []
 for i, entry in enumerate(inflation.values.tolist()):
     if math.isnan(entry[1]) or math.isinf(entry[1]):
         to_remove.append(i)
-#print(inflation)
+
 for index in to_remove:
     # index will correspond to offset from start year, so we can add 1960 with index to get which value to remove
     # for both year list and inflation data
@@ -262,12 +267,43 @@ for country_set in top:
 print_table(top_with_names, bottom_with_names, year)
 
 
-
 # ------------------------------------------------------------------------------------------------------------------------
 # Uppgift 4
 # ------------------------------------------------------------------------------------------------------------------------
 # Skriv din kod här:
-# Didnt finish this one in time..
+def analyze_inflation_by_continent(df_cpi, df_regions):
+    merged_df = pd.merge(df_cpi, df_regions[['Landskod', 'Kontinent']], how='left', on='Landskod')
+
+    # Converts 1960 to 2022 to ints
+    merged_df.loc[:, '1960':'2022'] = merged_df.loc[:,'1960':'2022'].apply(pd.to_numeric, errors='coerce')
+
+    # Highest inflation per continent
+    max_inflation = merged_df.groupby('Kontinent').max()
+
+    # Lowest inflation per continent
+    min_inflation = merged_df.groupby('Kontinent').min()
+
+    return max_inflation, min_inflation
+
+
+def print_table(avg_inflation, max_inflation, min_inflation):
+    # Format table
+    print("="*80)
+    print("O L I K A  K O N T I N E N T E R S  I N F L A T I O N  U N D E R")
+    print("T I D S P E R I O D E N  1 9 6 0 -- 2 0 2 2")
+    print("-"*80)
+    print(f"{'Högst':<10}{'Lägst':<10}{'Medel 1960-2022':<10}")
+    print("-"*80)
+
+    # Loop through the averages
+    for continent, inflation in avg_inflation.items():
+        highest_country = max_inflation.loc[continent, 'Landskod']
+        highest_inflation = max_inflation.loc[continent, '2022']
+        lowest_country = min_inflation.loc[continent, 'Landskod']
+        lowest_inflation = min_inflation.loc[continent, '1960']
+        mean_inflation = data.mean()
+        print(f"{continent:<10}{highest_country} {highest_inflation:<10.1f} {lowest_country} {lowest_inflation:<10.1f}{mean_inflation:<10.1f}")
+
 years = range(1960, 2023)
 
 merged_df = pd.merge(df_cpi, df_regions, left_on="Landskod", right_on="Landskod")
@@ -278,6 +314,7 @@ continents = ["Africa", "Oceania", "Europe", "America", "Asia"]
 
 averages = {}
 for continent in continents:
+    # Calculate the averages per continent
     cont_avg = 0
     count = 0
     data = merged_df.loc[merged_df["Kontinent"] == continent]
@@ -291,6 +328,8 @@ for continent in continents:
 
     infl_average = cont_avg / count
     averages[continent] = infl_average
+
+max_inflation, min_inflation = analyze_inflation_by_continent(df_cpi, df_regions)
 
 
 # ------------------------------------------------------------------------------------------------------------------------
@@ -323,10 +362,10 @@ def get_5_max(df):
     return years, inflations.tolist()
 
 # we assume we get proper inputs, since input handling is tedious and not the point of this exercise
-country = input("Ange vilket land som ska analyseras: ")
-subject = input("Ange vilken subject du vill analysera: ")
-frequency = input("Ange vilken frequency du vill analysera: ")
-measure = input("Ange vilken measure du vill analysera: ")
+country = input("Ange vilket land som ska analyseras (ex Sweden): ")
+subject = input("Ange vilken subject du vill analysera (FOOD, ENRG, TOT eller TOT_FOODENR): ")
+frequency = input("Ange vilken frequency du vill analysera (A, M eller Q): ")
+measure = input("Ange vilken measure du vill analysera (AGRWTH, IDX2015): ")
 
 # Merge the databases into one using the location and landskod columns where matching.
 # then we can just plot the results
